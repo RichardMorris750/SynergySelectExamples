@@ -1,0 +1,33 @@
+import System
+import System.Collections.Generic
+import System.Text
+
+
+namespace CommonLogic
+
+	public static class Initialize
+	
+		static method Initialize
+			endparams
+		proc
+
+			;;ensure we anchor things to the UI
+			Symphony.Conductor.Static.ThreadSafe.AnchorToUIThread()
+		endmethod
+
+		public static method CheckDataInstall, void
+			endparams
+		proc
+			data logValue	,a20
+			data logLength	,i4
+			getlog("SYMPHONYDATA", logValue, logLength)
+			if (!logLength)
+			begin
+				System.Windows.Forms.MessageBox.Show("Please install the Symphony Framework Sample Database (www.symphonyframework.net)")
+				stop;;!
+			end
+		endmethod
+
+	endclass
+
+endnamespace
