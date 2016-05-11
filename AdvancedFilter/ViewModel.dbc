@@ -1,0 +1,152 @@
+;;**********************************************************************
+;;
+;; Title:       ViewModel.dbc
+;;
+;; Type:        Class
+;;
+;; Description: data to UI connector
+;;
+;; Author:      Richard C. Morris, Synergex Professional Services Group
+;;
+;; Copyright (c) 2016, Synergex International, Inc. All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+import System
+import System.Collections.Generic
+import System.Text
+import Symphony.Conductor.ViewModel
+import System.Windows
+import System.Collections.ObjectModel
+import DataObjects
+
+;;need to import the required namespace
+import Synergex.SynergyDE.Select
+import Symphony.Conductor.Commands
+
+namespace AdvancedFilter
+	
+	public class ViewModel extends BaseViewModel
+		
+		;;define the destination structure
+		private mItem	,STRPart
+		
+		public method ViewModel
+			in req sender		,@FrameworkElement
+			endparams
+			parent(sender)
+		proc
+			;;ensure we have sample data based installed
+			CommonLogic.Initialize.CheckDataInstall()
+			
+			;;create the collection bound to the UI
+			PartList = new ObservableCollection<Part_Data>()
+			PartListFiltered = new ObservableCollection<Part_Data>()
+			
+			;;create the data binding properties
+			PartItem = new Part_Data()
+			
+			;;perform the select
+			foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem))
+			begin
+				PartList.Add(new Part_Data(mItem))
+			end
+			
+		endmethod
+		
+		;;; <summary>
+		;;; Collection that raises "CollecitonChanged" events when items in it are added.
+		;;; </summary>
+		public property PartList, @ObservableCollection<Part_Data>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		;;; <summary>
+		;;; Collection that raises "CollecitonChanged" events when items in it are added.
+		;;; </summary>
+		public property PartListFiltered, @ObservableCollection<Part_Data>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+.region "Proerties to provide access to the filter fields/commands"
+		
+		public property PartItem, @Part_Data
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		public property CaseSensitive, boolean
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+
+		private mPerformSelect	,@GenericCommand
+		
+		public property PerformSelect, @GenericCommand
+			method get
+			proc
+				if (mPerformSelect == ^null)
+				begin
+					lambda doCommand(sender, param)
+					begin
+						PartListFiltered.Clear()
+
+						;;perform the select
+						data selectCommand	,@Select
+
+						if (CaseSensitive) then
+							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), Where.Contains(mItem.Description, PartItem.Description))
+						else
+							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), NoCaseWhere.Contains(mItem.Description, PartItem.Description))
+
+						foreach mItem in selectCommand
+						begin
+							PartListFiltered.Add(new Part_Data(mItem))
+						end
+						
+					end
+					mPerformSelect = new GenericCommand("FILTER", doCommand)
+				end
+				mreturn mPerformSelect
+			endmethod
+		endproperty
+		
+		
+.endregion
+		
+	endclass
+	
+	
+endnamespace

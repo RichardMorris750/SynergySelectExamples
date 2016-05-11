@@ -1,0 +1,48 @@
+﻿<Window x:Class="AdvancedFilter.MainWindow1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Advanced Filter" Height="500" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="4"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Path=PartList}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="50"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost price" Binding="{Binding Path=Cost_price}" Width="80"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+
+        <Grid Grid.Row="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4">
+                <TextBlock Text="Filter on Description"></TextBlock>
+                <TextBox Text="{Binding Path=PartItem.Description}" MaxLength="20" Width="100" CharacterCasing="Normal" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
+                <CheckBox IsChecked="{Binding Path=CaseSensitive}" Content="Case sensitive?" Margin="10,0,0,0"></CheckBox>
+                <Button Content="Perform Select" Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True"></Button>
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Path=PartListFiltered}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="100"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Cost price" Binding="{Binding Path=Cost_price}" Width="80"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+    </Grid>
+</Window>
