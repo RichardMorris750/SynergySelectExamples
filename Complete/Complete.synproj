@@ -2,41 +2,51 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Name>"DataObjects"</Name>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ba287e39-7ce0-4ba3-aa28-e72bc72cff4b}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>DataObjects</RootNamespace>
-    <AssemblyName>DataObjects</AssemblyName>
-    <MainFile>Class.dbl</MainFile>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <TargetPlatform>v452</TargetPlatform>
+    <ProjectGuid>{47bbebd9-f42e-4797-bc93-419d20c2ac91}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Complete</RootNamespace>
+    <AssemblyName>Complete</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <Language>Synergy</Language>
+    <ProjectTypeGuids>{339B3E77-97E9-4f6d-9151-E6D103EA4D4A};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{BBD0F5D1-1CC4-42fd-BA4C-A96779C64378}</ProjectTypeGuids>
     <DBL_qWarnLevel>3 - Don't display warning levels higher than 3</DBL_qWarnLevel>
     <DBL_qWarn>True</DBL_qWarn>
     <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
-    <Language>Synergy</Language>
     <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <ProjEnvVars>RPSMFIL=$(SymphonyRPS)\rpsmain.ism;RPSTFIL=$(SymphonyRPS)\rpstext.ism</ProjEnvVars>
+    <Name>Complete</Name>
+    <TargetPlatform>v451</TargetPlatform>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
     <DebugOptimize>Debug</DebugOptimize>
-    <DocumentationFile>bin\Debug\DataObjects.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Complete.xml</DocumentationFile>
     <Prefer32Bit Condition=" '$(TargetFrameworkVersion)'  != 'v4.0' AND '$(Prefer32Bit)' != 'false' ">true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
     <DebugOptimize>Optimize</DebugOptimize>
-    <DocumentationFile>bin\Release\DataObjects.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Complete.xml</DocumentationFile>
     <Prefer32Bit Condition=" '$(TargetFrameworkVersion)'  != 'v4.0' AND '$(Prefer32Bit)' != 'false' ">true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -95,7 +105,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -104,22 +114,72 @@
       <CopyLocal>True</CopyLocal>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Group_Data.CodeGen.dbc" />
-    <Compile Include="Order_header_Data.CodeGen.dbc" />
-    <Compile Include="Order_line_Data.CodeGen.dbc" />
-    <Compile Include="Order_line_Data.dbc" />
-    <Compile Include="Part_Data.CodeGen.dbc" />
-    <Compile Include="Part_Data.dbc" />
-    <Compile Include="Properties\AssemblyInfo.dbl" />
-    <Compile Include="Supplier_Data.CodeGen.dbc" />
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="ViewModel.dbc" />
+    <Page Include="MainWindow1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.dbl">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow1.xaml.dbl">
+      <DependentUpon>MainWindow1.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.dbl">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.dbl</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Properties\Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.dbl</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties\Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\CommonLogic\CommonLogic.synproj">
+      <Name>CommonLogic</Name>
+      <Project>{4a46f688-2382-440d-a285-11e64185ca3e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\DataObjects\DataObjects.synproj">
+      <Name>DataObjects</Name>
+      <Project>{ba287e39-7ce0-4ba3-aa28-e72bc72cff4b}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
   <PropertyGroup>

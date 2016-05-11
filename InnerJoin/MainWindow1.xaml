@@ -24,8 +24,8 @@
                                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Orders}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Order #" Binding="{Binding Path=Order_number}" Width="*"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=Cust_ref}" Width="*"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=Del_date}" Width="*"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Reference" Binding="{Binding Path=Cust_ref}" Width="*"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Date" Binding="{Binding Path=Del_date, StringFormat=d}" Width="*"></DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </DataTemplate>
