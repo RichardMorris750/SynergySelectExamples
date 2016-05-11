@@ -15,6 +15,8 @@ Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "SimpleSelect", "SimpleSelec
 EndProject
 Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "CommonLogic", "CommonLogic\CommonLogic.synproj", "{4A46F688-2382-440D-A285-11E64185CA3E}"
 EndProject
+Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "SimpleFilter", "SimpleFilter\SimpleFilter.synproj", "{10D6EA15-4553-46A1-85F2-8663883E6C16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4A46F688-2382-440D-A285-11E64185CA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A46F688-2382-440D-A285-11E64185CA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A46F688-2382-440D-A285-11E64185CA3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D6EA15-4553-46A1-85F2-8663883E6C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D6EA15-4553-46A1-85F2-8663883E6C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D6EA15-4553-46A1-85F2-8663883E6C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10D6EA15-4553-46A1-85F2-8663883E6C16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

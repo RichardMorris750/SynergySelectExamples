@@ -43,10 +43,14 @@ import DataObjects
 
 ;;need to import the required namespace
 import Synergex.SynergyDE.Select
+import Symphony.Conductor.Commands
 
-namespace SimpleSelect
+namespace SimpleFilter
 
 	public class ViewModel extends BaseViewModel
+		
+		;;define the destination structure
+		private mItem	,STRPart
 
 		public method ViewModel
 			in req sender		,@FrameworkElement
@@ -55,20 +59,22 @@ namespace SimpleSelect
 		proc
 			;;ensure we have sample data based installed
 			CommonLogic.Initialize.CheckDataInstall()
+
 			;;create the collection bound to the UI
 			PartList = new ObservableCollection<Part_Data>()
+			PartListFiltered = new ObservableCollection<Part_Data>()
 
-			;;define the destination structure
-			data item	,STRPart
-
+			;;create the data binding properties
+			PartItem = new Part_Data()
+			
 			;;perform the select
-			foreach item in new Select(new From("SYMPHONYDATA:parts.ism", item))
+			foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem))
 			begin
-				PartList.Add(new Part_Data(item))
+				PartList.Add(new Part_Data(mItem))
 			end
-
+			
 		endmethod
-	
+		
 		;;; <summary>
 		;;; Collection that raises "CollecitonChanged" events when items in it are added.
 		;;; </summary>
@@ -78,8 +84,53 @@ namespace SimpleSelect
 			method set
 			endmethod
 		endproperty
+
+		;;; <summary>
+		;;; Collection that raises "CollecitonChanged" events when items in it are added.
+		;;; </summary>
+		public property PartListFiltered, @ObservableCollection<Part_Data>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+.region "Proerties to provide access to the filter fields/commands"
+		
+		public property PartItem, @Part_Data
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		private mPerformSelect	,@GenericCommand
+
+		public property PerformSelect, @GenericCommand
+			method get
+			proc
+				if (mPerformSelect == ^null)
+				begin
+					lambda doCommand(sender, param)
+					begin
+						PartListFiltered.Clear()
+						;;perform the select
+						foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem), (Where)(mItem.Id == PartItem.Id))
+						begin
+							PartListFiltered.Add(new Part_Data(mItem))
+						end
+						
+					end
+					mPerformSelect = new GenericCommand("FILTER", doCommand)
+				end
+				mreturn mPerformSelect
+			endmethod
+		endproperty
 		
 
+.endregion
+
 	endclass
+	
 
 endnamespace
