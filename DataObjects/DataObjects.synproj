@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Group_Data.CodeGen.dbc" />
     <Compile Include="Part_Data.CodeGen.dbc" />
+    <Compile Include="Part_Data.dbc" />
     <Compile Include="Properties\AssemblyInfo.dbl" />
     <Compile Include="Supplier_Data.CodeGen.dbc" />
   </ItemGroup>

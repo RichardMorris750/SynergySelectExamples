@@ -60,7 +60,7 @@ namespace FilterAndOrderBy
 			parent(sender)
 		proc
 			;;ensure we have sample data based installed
-			CommonLogic.Initialize.CheckDataInstall()
+			CommonLogic.General.CheckDataInstall()
 			
 			;;create the collection bound to the UI
 			PartList = new ObservableCollection<Part_Data>()

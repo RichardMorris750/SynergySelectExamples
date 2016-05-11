@@ -1,0 +1,20 @@
+import System
+import System.Collections.Generic
+import System.Text
+
+
+namespace DataObjects
+
+	public partial class Part_Data
+	
+		public property GroupDescription, string
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+
+	endclass
+
+endnamespace

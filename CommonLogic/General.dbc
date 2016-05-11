@@ -1,10 +1,10 @@
 ;;**********************************************************************
 ;;
-;; Title:       ViewModel.dbc
+;; Title:       Initialize.dbc
 ;;
 ;; Type:        Class
 ;;
-;; Description: data to UI connector
+;; Description: Basic applcaiton logic
 ;;
 ;; Author:      Richard C. Morris, Synergex Professional Services Group
 ;;
@@ -32,54 +32,64 @@
 ;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 ;; POSSIBILITY OF SUCH DAMAGE.
 ;;
-;;*****************************************************************************
-import System
+;;*****************************************************************************import System
 import System.Collections.Generic
 import System.Text
-import Symphony.Conductor.ViewModel
-import System.Windows
-import System.Collections.ObjectModel
-import DataObjects
 
-;;need to import the required namespace
-import Synergex.SynergyDE.Select
 
-namespace SimpleSelect
+namespace CommonLogic
 
-	public class ViewModel extends BaseViewModel
-
-		public method ViewModel
-			in req sender		,@FrameworkElement
-			endparams
-			parent(sender)
-		proc
-			;;ensure we have sample data based installed
-			CommonLogic.General.CheckDataInstall()
-			;;create the collection bound to the UI
-			PartList = new ObservableCollection<Part_Data>()
-
-			;;define the destination structure
-			data item	,STRPart
-
-			;;perform the select
-			foreach item in new Select(new From("SYMPHONYDATA:parts.ism", item))
-			begin
-				PartList.Add(new Part_Data(item))
-			end
-
-		endmethod
+	public static class General
 	
-		;;; <summary>
-		;;; Collection that raises "CollecitonChanged" events when items in it are added.
-		;;; </summary>
-		public property PartList, @ObservableCollection<Part_Data>
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
+		static method General
+			endparams
+		proc
 
+			;;ensure we anchor things to the UI
+			Symphony.Conductor.Static.ThreadSafe.AnchorToUIThread()
+		endmethod
+
+		public static method CheckDataInstall, void
+			endparams
+		proc
+			data logValue	,a20
+			data logLength	,i4
+			getlog("SYMPHONYDATA", logValue, logLength)
+			if (!logLength)
+			begin
+				System.Windows.Forms.MessageBox.Show("Please install the Symphony Framework Sample Database (www.symphonyframework.net)")
+				stop;;!
+			end
+		endmethod
+
+		public static method StartLogging, void
+			endparams
+		proc
+			data status ,int
+			setlog("DBG_SELECT", "1", status)
+			setlog("DBG_SELECT_FILE", "SYMPHONYDATA:select_log_file.log", status)
+		endmethod
+
+		public static method FinishLogging	,@List<String>
+			endparams
+		proc
+			data response = new List<String>()
+
+			data chn	,i4	,0
+			data inBuf		,a2000
+			open(chn, i, "SYMPHONYDATA:select_log_file.log")
+			repeat
+			begin
+				reads(chn, inBuf, endOfFile)
+				response.Add((string)%atrim(inBuf))
+			end
+		EndOfFile,
+			close(chn)
+
+			delet("SYMPHONYDATA:select_log_file.log")
+			mreturn response
+			
+		endmethod
 	endclass
 
 endnamespace

@@ -1,10 +1,10 @@
 ;;**********************************************************************
 ;;
-;; Title:       Initialize.dbc
+;; Title:       ViewModel.dbc
 ;;
 ;; Type:        Class
 ;;
-;; Description: Basic applcaiton logic
+;; Description: data to UI connector
 ;;
 ;; Author:      Richard C. Morris, Synergex Professional Services Group
 ;;
@@ -32,36 +32,73 @@
 ;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 ;; POSSIBILITY OF SUCH DAMAGE.
 ;;
-;;*****************************************************************************import System
+;;*****************************************************************************
+import System
 import System.Collections.Generic
 import System.Text
 
+import Symphony.Conductor.ViewModel
+import System.Windows
+import System.Collections.ObjectModel
+import DataObjects
 
-namespace CommonLogic
+;;need to import the required namespace
+import Synergex.SynergyDE.Select
+import Symphony.Conductor.Commands
 
-	public static class Initialize
+namespace InnerJoin
 	
-		static method Initialize
+	public class ViewModel extends BaseViewModel
+		
+		public method ViewModel
+			in req sender		,@FrameworkElement
 			endparams
+			parent(sender)
 		proc
+			;;ensure we have sample data based installed
+			CommonLogic.General.CheckDataInstall()
+			
+			PartList = new ObservableCollection<Part_Data>()
 
-			;;ensure we anchor things to the UI
-			Symphony.Conductor.Static.ThreadSafe.AnchorToUIThread()
-		endmethod
-
-		public static method CheckDataInstall, void
-			endparams
-		proc
-			data logValue	,a20
-			data logLength	,i4
-			getlog("SYMPHONYDATA", logValue, logLength)
-			if (!logLength)
+			data resultSet	,@Rows
+			
+			data partItem	,STRPart
+			data groupItem	,STRGroup
+			
+			foreach resultSet in new Select(
+				&	new From("SYMPHONYDATA:parts.ism", partItem)
+				&	.InnerJoin(new From("SYMPHONYDATA:groups.ism", groupItem), 
+				&	(On)(partItem.str_groupid == groupItem.str_group_id))
+				&	).Join()
 			begin
-				System.Windows.Forms.MessageBox.Show("Please install the Symphony Framework Sample Database (www.symphonyframework.net)")
-				stop;;!
+				;;move the data from the JoinSelect to our model data
+				resultSet.Fill(partItem)
+				resultSet.Fill(groupItem)
+				data partObject	= new Part_Data(partItem)
+				partObject.GroupDescription = groupItem.str_description
+				PartList.Add(partObject)
 			end
 		endmethod
+		
+		;;; <summary>
+		;;; Collection that raises "CollecitonChanged" events when items in it are added.
+		;;; </summary>
+		public property PartList, @ObservableCollection<Part_Data>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
 
+		public property LogList, @List<string>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		
+		
 	endclass
-
+	
 endnamespace
