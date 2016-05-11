@@ -47,12 +47,9 @@ import Symphony.Conductor.Commands
 
 .array 0
 
-namespace FilterAndOrderBy
+namespace SparseData
 	
 	public class ViewModel extends BaseViewModel
-		
-;;define the destination structure
-		private mItem	,STRPart
 		
 		public method ViewModel
 			in req sender		,@FrameworkElement
@@ -61,24 +58,77 @@ namespace FilterAndOrderBy
 		proc
 			;;ensure we have sample data based installed
 			CommonLogic.Initialize.CheckDataInstall()
-			
 			;;create the collection bound to the UI
 			PartList = new ObservableCollection<Part_Data>()
-			PartListFiltered = new ObservableCollection<Part_Data>()
 			
-			;;setup the order by options
-			OrderByOptions = new List<Boolean>() {true, false, false, false}
+			;;set to return all fields
+			FieldList = new List<Boolean>() {true, true, true, true}
 			
-			;;create the data binding properties
-			PartItemMin = new Part_Data()
-			PartItemMax = new Part_Data()
+			performDataLoad()
 			
-			;;perform the select
-			foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem))
+		endmethod
+		
+		private method performDataLoad, void
+			endparams
+		proc
+			
+			PartList.Clear()
+			
+			;;we are goingt to dynamically define the bind fields
+			
+			;;see how many fields are selected
+			data fieldCount			,i4					,0
+			data boolItem	,boolean
+			foreach boolItem in FieldList
 			begin
-				PartList.Add(new Part_Data(mItem))
+				if (boolItem) incr fieldCount
 			end
 			
+			
+			;;bind each field
+			if (fieldCount)
+			begin
+				data varArgsCollection	,[#]@VariantDesc
+				varArgsCollection = new VariantDesc[fieldCount]
+				
+				;;define the destination structure
+				data item	,STRPart
+				
+				data pos	,i4	,0
+				
+				;;define the fields we want to see
+				if (FieldList[0])
+				begin
+					varArgsCollection[pos] = item.str_id
+					incr pos
+				end
+				if (FieldList[1])
+				begin
+					varArgsCollection[pos] = item.str_Description
+					incr pos
+				end
+				if (FieldList[2])
+				begin
+					varArgsCollection[pos] = item.str_Quantity
+					incr pos
+				end
+				if (FieldList[3])
+				begin
+					varArgsCollection[pos] = item.str_Cost_price
+					incr pos
+				end
+				
+				;;define the select query
+				data selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", item))
+				selectCommand.SparseRecord(^varargarray(varArgsCollection))
+				
+				
+				;;perform the select
+				foreach item in selectCommand
+				begin
+					PartList.Add(new Part_Data(item))
+				end
+			end
 		endmethod
 		
 		;;; <summary>
@@ -91,47 +141,12 @@ namespace FilterAndOrderBy
 			endmethod
 		endproperty
 		
-		;;; <summary>
-		;;; Collection that raises "CollecitonChanged" events when items in it are added.
-		;;; </summary>
-		public property PartListFiltered, @ObservableCollection<Part_Data>
+		public property FieldList, @List<Boolean>
 			method get
 			endmethod
 			method set
 			endmethod
 		endproperty
-		
-.region "Proerties to provide access to the filter fields/commands"
-		
-		public property PartItemMin, @Part_Data
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
-		public property PartItemMax, @Part_Data
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
-		public property CaseSensitive, boolean
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
-		
-		public property OrderByOptions, @List<boolean>
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
 		
 		private mPerformSelect	,@GenericCommand
 		
@@ -142,28 +157,7 @@ namespace FilterAndOrderBy
 				begin
 					lambda doCommand(sender, param)
 					begin
-						PartListFiltered.Clear()
-						
-						;;perform the select
-						data orderOption	,@OrderBy
-						
-						;;set the order by based on the selection
-						if (OrderByOptions[0] == true)
-							orderOption = OrderBy.Ascending(mItem.str_quantity)
-						if (OrderByOptions[1] == true)
-							orderOption = OrderBy.Descending(mItem.str_quantity)
-						if (OrderByOptions[2] == true)
-							orderOption = OrderBy.Ascending(mItem.str_cost_price)
-						if (OrderByOptions[3] == true)
-							orderOption = OrderBy.Descending(mItem.str_cost_price)
-						
-						foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem),
-						&	Where.Between(mItem.str_cost_price,PartItemMin.Cost_price, PartItemMax.Cost_price), 
-						&	orderOption)
-						begin
-							PartListFiltered.Add(new Part_Data(mItem))
-						end
-						
+						performDataLoad()
 					end
 					mPerformSelect = new GenericCommand("FILTER", doCommand)
 				end
@@ -171,8 +165,6 @@ namespace FilterAndOrderBy
 			endmethod
 		endproperty
 		
-		
-.endregion
 		
 	endclass
 	

@@ -18,7 +18,9 @@ namespace DataObjects
 
     ;;define a structure that we can use around the applicaiton
 
-    .include 'supplier' repository  , structure = 'STRSupplier', end
+	structure STRSupplier
+		.include 'supplier' repository  , norecord, prefix = "str_"
+	endstructure
 
     public partial class Supplier_Data extends Symphony.Conductor.Model.DataObjectBase
 
@@ -244,13 +246,13 @@ namespace DataObjects
 		public property Supplier_id, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.supplier_id, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_supplier_id, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Supplier_id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_supplier_id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Supplier_id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_supplier_id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(1)
 					RaisePropertyChanged("Supplier_id")
 				end
@@ -260,13 +262,13 @@ namespace DataObjects
 		public property Name, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.name, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_name, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Name .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_name .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Name = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_name = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(2)
 					RaisePropertyChanged("Name")
 				end
@@ -276,13 +278,13 @@ namespace DataObjects
 		public property Address_1, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.address_1, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_address_1, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Address_1 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_address_1 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Address_1 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_address_1 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(3)
 					RaisePropertyChanged("Address_1")
 				end
@@ -292,13 +294,13 @@ namespace DataObjects
 		public property Address_2, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.address_2, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_address_2, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Address_2 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_address_2 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Address_2 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_address_2 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(4)
 					RaisePropertyChanged("Address_2")
 				end
@@ -308,13 +310,13 @@ namespace DataObjects
 		public property Address_3, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.address_3, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_address_3, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Address_3 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_address_3 .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Address_3 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_address_3 = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(5)
 					RaisePropertyChanged("Address_3")
 				end
@@ -324,13 +326,13 @@ namespace DataObjects
 		public property City, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.city, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_city, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.City .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_city .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.City = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_city = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(6)
 					RaisePropertyChanged("City")
 				end
@@ -340,13 +342,13 @@ namespace DataObjects
 		public property Postal_code, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.postal_code, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_postal_code, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Postal_code .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_postal_code .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Postal_code = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_postal_code = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(7)
 					RaisePropertyChanged("Postal_code")
 				end
@@ -356,13 +358,13 @@ namespace DataObjects
 		public property Web_address, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(supplier_main.web_address, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(supplier_main.str_web_address, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Supplier_main.Web_address .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Supplier_main.str_web_address .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Supplier_main.Web_address = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Supplier_main.str_web_address = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(8)
 					RaisePropertyChanged("Web_address")
 				end

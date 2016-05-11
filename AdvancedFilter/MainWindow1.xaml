@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4">
-                <TextBlock Text="Filter on Description" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="Filter on Description" VerticalAlignment="Center" Margin="20,0,0,0" ></TextBlock>
                 <TextBox Text="{Binding Path=PartItem.Description}" MaxLength="20" Width="100" CharacterCasing="Normal" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
                 <CheckBox IsChecked="{Binding Path=CaseSensitive}" Content="Case sensitive?" Margin="10,0,0,0" VerticalAlignment="Center"></CheckBox>
                 <Button Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True">

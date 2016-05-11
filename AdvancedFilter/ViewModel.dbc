@@ -127,9 +127,9 @@ namespace AdvancedFilter
 						data selectCommand	,@Select
 
 						if (CaseSensitive) then
-							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), Where.Contains(mItem.Description, PartItem.Description))
+							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), Where.Contains(mItem.str_description, PartItem.Description))
 						else
-							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), NoCaseWhere.Contains(mItem.Description, PartItem.Description))
+							selectCommand = new Select(new From("SYMPHONYDATA:parts.ism", mItem), NoCaseWhere.Contains(mItem.str_description, PartItem.Description))
 
 						foreach mItem in selectCommand
 						begin

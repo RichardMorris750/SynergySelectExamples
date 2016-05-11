@@ -23,13 +23,14 @@
         <StackPanel Grid.Row="2" Orientation="Vertical">
 
             <StackPanel Orientation="Horizontal" Margin="4">
-                <TextBlock Text="Filter on ID" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="Filter on ID" VerticalAlignment="Center" Margin="20,0,0,0" ></TextBlock>
                 <TextBox Text="{Binding Path=PartItem.Id}" MaxLength="20" Width="100" CharacterCasing="Upper" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
                 <Button Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True">
                     <Button.Content>
                         <Image Source="pack://application:,,,/CommonLogic;component/Image/search.jpg" Width="100"></Image>
                     </Button.Content>
-                </Button>            </StackPanel>
+                </Button>            
+            </StackPanel>
 
             <DataGrid ItemsSource="{Binding Path=PartListFiltered}" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>

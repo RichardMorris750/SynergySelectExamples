@@ -18,7 +18,9 @@ namespace DataObjects
 
     ;;define a structure that we can use around the applicaiton
 
-    .include 'group' repository  , structure = 'STRGroup', end
+	structure STRGroup
+		.include 'group' repository  , norecord, prefix = "str_"
+	endstructure
 
     public partial class Group_Data extends Symphony.Conductor.Model.DataObjectBase
 
@@ -202,13 +204,13 @@ namespace DataObjects
 		public property Group_id, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(group_main.group_id, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(group_main.str_group_id, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Group_main.Group_id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Group_main.str_group_id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Group_main.Group_id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Group_main.str_group_id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(1)
 					RaisePropertyChanged("Group_id")
 				end
@@ -218,13 +220,13 @@ namespace DataObjects
 		public property Description, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(group_main.description, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(group_main.str_description, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Group_main.Description .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Group_main.str_description .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Group_main.Description = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Group_main.str_description = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(2)
 					RaisePropertyChanged("Description")
 				end

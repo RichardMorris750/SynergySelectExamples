@@ -115,7 +115,7 @@ namespace SimpleFilter
 					begin
 						PartListFiltered.Clear()
 						;;perform the select
-						foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem), (Where)(mItem.Id == PartItem.Id))
+						foreach mItem in new Select(new From("SYMPHONYDATA:parts.ism", mItem), (Where)(mItem.str_id == PartItem.Id))
 						begin
 							PartListFiltered.Add(new Part_Data(mItem))
 						end

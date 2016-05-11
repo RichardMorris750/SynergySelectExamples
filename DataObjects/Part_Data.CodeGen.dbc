@@ -18,7 +18,9 @@ namespace DataObjects
 
     ;;define a structure that we can use around the applicaiton
 
-    .include 'part' repository  , structure = 'STRPart', end
+	structure STRPart
+		.include 'part' repository  , norecord, prefix = "str_"
+	endstructure
 
     public partial class Part_Data extends Symphony.Conductor.Model.DataObjectBase
 
@@ -244,13 +246,13 @@ namespace DataObjects
 		public property Id, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.id, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_id, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_id .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_id = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(1)
 					RaisePropertyChanged("Id")
 				end
@@ -260,13 +262,13 @@ namespace DataObjects
 		public property Groupid, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.groupid, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_groupid, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Groupid .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_groupid .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Groupid = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_groupid = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(2)
 					RaisePropertyChanged("Groupid")
 				end
@@ -276,13 +278,13 @@ namespace DataObjects
 		public property Supplierid, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.supplierid, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_supplierid, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Supplierid .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_supplierid .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Supplierid = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_supplierid = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(3)
 					RaisePropertyChanged("Supplierid")
 				end
@@ -292,13 +294,13 @@ namespace DataObjects
 		public property Description, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.description, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_description, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Description .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_description .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Description = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_description = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(4)
 					RaisePropertyChanged("Description")
 				end
@@ -308,13 +310,13 @@ namespace DataObjects
 		public property Technical_info, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.technical_info, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_technical_info, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Technical_info .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_technical_info .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Technical_info = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_technical_info = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(5)
 					RaisePropertyChanged("Technical_info")
 				end
@@ -324,13 +326,13 @@ namespace DataObjects
 		public property Quantity, Int32
 			method get
 			proc
-				mreturn (int32)mIntegerConveter.Convert(part_main.quantity, ^null, ^null, ^null)
+				mreturn (int32)mIntegerConveter.Convert(part_main.str_quantity, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Quantity .ne. (i)mIntegerConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_quantity .ne. (i)mIntegerConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Quantity = (i)mIntegerConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_quantity = (i)mIntegerConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(6)
 					RaisePropertyChanged("Quantity")
 				end
@@ -340,13 +342,13 @@ namespace DataObjects
 		public property Cost_price, Decimal
 			method get
 			proc
-				mreturn (decimal)mImpliedDecimalConveter.Convert(part_main.cost_price, ^null, ^null, ^null)
+				mreturn (decimal)mImpliedDecimalConveter.Convert(part_main.str_cost_price, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Cost_price .ne. (id)mImpliedDecimalConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_cost_price .ne. (id)mImpliedDecimalConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Cost_price = (id)mImpliedDecimalConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_cost_price = (id)mImpliedDecimalConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(7)
 					RaisePropertyChanged("Cost_price")
 				end
@@ -356,13 +358,13 @@ namespace DataObjects
 		public property Spare, String
 			method get
 			proc
-				mreturn (string)mAlphaConveter.Convert(part_main.spare, ^null, ^null, ^null)
+				mreturn (string)mAlphaConveter.Convert(part_main.str_spare, ^null, ^null, ^null)
             endmethod
 			method set
 			proc
-				if (Part_main.Spare .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
+				if (Part_main.str_spare .nes. (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null))
 				begin
-				Part_main.Spare = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
+				Part_main.str_spare = (a)mAlphaConveter.ConvertBack(value, ^null, ^null, ^null)
 					ValidateEnteredData(8)
 					RaisePropertyChanged("Spare")
 				end

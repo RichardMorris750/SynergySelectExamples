@@ -31,10 +31,10 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBox Text="{Binding Path=PartItemMin.Cost_price}" MaxLength="40" Width="100" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
                         <TextBlock Text="and" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Text="{Binding Path=PartItemMax.Cost_price}" MaxLength="40" Width="100" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
+                        <TextBox Text="{Binding Path=PartItemMax.Cost_price}" MaxLength="40" Width="100" Margin="10,0,10,0" VerticalAlignment="Center"></TextBox>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Order by">
+                <GroupBox Header="Order by" Padding="2">
                     <StackPanel Orientation="Vertical">
                         <RadioButton Content="Ascending by quantity" IsChecked="{Binding Path=OrderByOptions[0]}"></RadioButton>
                         <RadioButton Content="Descending by quantity" IsChecked="{Binding Path=OrderByOptions[1]}"></RadioButton>
