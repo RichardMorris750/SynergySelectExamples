@@ -3,15 +3,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Inner join" Height="300" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DataGrid ItemsSource="{Binding Path=PartList}" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Supplier" Binding="{Binding Path=Supplierid}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Group" Binding="{Binding Path=GroupDescription}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="50"></DataGridTextColumn>
-                <DataGridTextColumn Header="Cost price" Binding="{Binding Path=Cost_price}" Width="80"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <TabControl>
+            <TabItem Header="All Suppliers">
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=SupplierList}" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Supplier code" Binding="{Binding Path=Supplier_id}" Width="200"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Outstanding Orders by Supplier">
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=OrderView}" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Supplier code" Binding="{Binding Path=SupplierDetails.Supplier_id}" Width="100"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=SupplierDetails.Name}" Width="200"></DataGridTextColumn>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Orders}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=Order_number}" Width="*"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=Cust_ref}" Width="*"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=Del_date}" Width="*"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </TabItem>
+
+        </TabControl>
+
     </Grid>
 </Window>

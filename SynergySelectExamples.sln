@@ -25,6 +25,8 @@ Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "SparseData", "SparseData\Sp
 EndProject
 Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "InnerJoin", "InnerJoin\InnerJoin.synproj", "{125B1D7F-7788-49AE-AA11-E85E020E9959}"
 EndProject
+Project("{BBD0F5D1-1CC4-42FD-BA4C-A96779C64378}") = "LeftJoin", "LeftJoin\LeftJoin.synproj", "{C61C2A92-1728-41CF-B4E8-E10856B2EDC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{125B1D7F-7788-49AE-AA11-E85E020E9959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{125B1D7F-7788-49AE-AA11-E85E020E9959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{125B1D7F-7788-49AE-AA11-E85E020E9959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C61C2A92-1728-41CF-B4E8-E10856B2EDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C61C2A92-1728-41CF-B4E8-E10856B2EDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C61C2A92-1728-41CF-B4E8-E10856B2EDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C61C2A92-1728-41CF-B4E8-E10856B2EDC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

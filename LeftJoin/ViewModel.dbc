@@ -46,7 +46,7 @@ import DataObjects
 import Synergex.SynergyDE.Select
 import Symphony.Conductor.Commands
 
-namespace InnerJoin
+namespace LeftJoin
 	
 	public class ViewModel extends BaseViewModel
 		
@@ -58,94 +58,38 @@ namespace InnerJoin
 			;;ensure we have sample data based installed
 			CommonLogic.General.CheckDataInstall()
 			
-			SupplierList = new ObservableCollection<Supplier_Data>()
-			OrderView = new ObservableCollection<OrderBook>()
+			PartList = new ObservableCollection<Part_Data>()
 			
-			data supplier		,STRSupplier
-			data orderHeader	,STROrder_header
+			data resultSet	,@Rows
 			
-			;;just load all the suppliers first
-			foreach supplier in new Select(new From("SYMPHONYDATA:suppliers.ism", supplier))
+			data partItem	,STRPart
+			data groupItem	,STRGroup
+			
+			foreach resultSet in new Select(
+				&	new From("SYMPHONYDATA:parts.ism", partItem)
+				&	.LeftJoin(new From("SYMPHONYDATA:groups.ism", groupItem), 
+				&	(On)(partItem.str_groupid == groupItem.str_group_id))
+				&	).Join()
 			begin
-				SupplierList.Add(new Supplier_Data(supplier))
-			end
-			
-			data resultset	,@rows
-			
-			data isChanged,	boolean
-			
-			;;load only suppliers with outstading orders
-
-			data orderBookItem	,@OrderBook
-
-			foreach resultset in new select(
-				&	new from("symphonydata:suppliers.ism", supplier)
-				&	.InnerJoin(new from("symphonydata:orders.ism", orderheader), 
-				&	(on)(supplier.str_supplier_id == orderheader.str_supplierid))
-				&	).join()
-			begin
-				;;move the data from the joinselect to our model data
-				resultset.RowInfo(supplier, , , isChanged)
-				if (isChanged)
-				begin
-					data obi	,@OrderBook
-					resultset.fill(supplier)
-					obi = new OrderBook(supplier)
-					orderBookItem = obi
-					OrderView.Add(orderBookItem)
-				end
-				;;get the order item
-				resultset.fill(orderheader)
-				orderBookItem.Orders.Add(new Order_header_Data(orderHeader))
+				;;move the data from the JoinSelect to our model data
+				resultSet.Fill(partItem)
+				resultSet.Fill(groupItem)
+				data partObject	= new Part_Data(partItem)
+				partObject.GroupDescription = groupItem.str_description
+				PartList.Add(partObject)
 			end
 		endmethod
 		
 		;;; <summary>
 		;;; Collection that raises "CollecitonChanged" events when items in it are added.
 		;;; </summary>
-		public property SupplierList, @ObservableCollection<Supplier_Data>
+		public property PartList, @ObservableCollection<Part_Data>
 			method get
 			endmethod
 			method set
 			endmethod
 		endproperty
 		
-		public property OrderView, @ObservableCollection<OrderBook>
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-
 	endclass
 	
-	public class OrderBook
-
-		public method OrderBook
-			in req suppiler		,STRSupplier
-			endparams
-		proc
-			SupplierDetails = new Supplier_Data(suppiler)
-			Orders = new ObservableCollection<Order_header_Data>()
-		endmethod
-
-		public property SupplierDetails, @Supplier_Data
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
-		
-		public property Orders, @ObservableCollection<Order_header_Data>
-			method get
-			endmethod
-			method set
-			endmethod
-		endproperty
-		
-		
-	endclass
-
-
 endnamespace
