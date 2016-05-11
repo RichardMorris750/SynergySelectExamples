@@ -27,10 +27,14 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4">
-                <TextBlock Text="Filter on Description"></TextBlock>
+                <TextBlock Text="Filter on Description" VerticalAlignment="Center"></TextBlock>
                 <TextBox Text="{Binding Path=PartItem.Description}" MaxLength="20" Width="100" CharacterCasing="Normal" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
-                <CheckBox IsChecked="{Binding Path=CaseSensitive}" Content="Case sensitive?" Margin="10,0,0,0"></CheckBox>
-                <Button Content="Perform Select" Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True"></Button>
+                <CheckBox IsChecked="{Binding Path=CaseSensitive}" Content="Case sensitive?" Margin="10,0,0,0" VerticalAlignment="Center"></CheckBox>
+                <Button Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True">
+                    <Button.Content>
+                        <Image Source="pack://application:,,,/CommonLogic;component/Image/search.jpg" Width="100"></Image>
+                    </Button.Content>
+                </Button>
             </StackPanel>
 
             <DataGrid Grid.Row="1" ItemsSource="{Binding Path=PartListFiltered}" AutoGenerateColumns="False" IsReadOnly="True">
