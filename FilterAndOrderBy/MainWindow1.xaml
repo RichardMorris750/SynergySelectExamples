@@ -1,0 +1,64 @@
+﻿<Window x:Class="FilterAndOrderBy.MainWindow1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Filter and Order by Exmaple" Height="500" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="4"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Path=PartList}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="50"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost price" Binding="{Binding Path=Cost_price}" Width="80"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+
+        <Grid Grid.Row="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4">
+                <GroupBox Header="Filter on cost between">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding Path=PartItemMin.Cost_price}" MaxLength="40" Width="100" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
+                        <TextBlock Text="and" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Text="{Binding Path=PartItemMax.Cost_price}" MaxLength="40" Width="100" Margin="10,0,0,0" VerticalAlignment="Center"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Order by">
+                    <StackPanel Orientation="Vertical">
+                        <RadioButton Content="Ascending by quantity" IsChecked="{Binding Path=OrderByOptions[0]}"></RadioButton>
+                        <RadioButton Content="Descending by quantity" IsChecked="{Binding Path=OrderByOptions[1]}"></RadioButton>
+                        <RadioButton Content="Ascending by cost price" IsChecked="{Binding Path=OrderByOptions[2]}"></RadioButton>
+                        <RadioButton Content="Descending by cost price" IsChecked="{Binding Path=OrderByOptions[3]}"></RadioButton>
+                    </StackPanel>
+                </GroupBox>
+                <Button Command="{Binding Path=PerformSelect}" Margin="20,0,0,0" VerticalAlignment="Center" IsDefault="True">
+                    <Button.Content>
+                        <Image Source="pack://application:,,,/CommonLogic;component/Image/search.jpg" Width="100"></Image>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Path=PartListFiltered}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="100"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Cost price" Binding="{Binding Path=Cost_price}" Width="80"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+    </Grid>
+</Window>
