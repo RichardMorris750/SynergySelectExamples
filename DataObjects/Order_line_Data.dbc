@@ -1,0 +1,20 @@
+import System
+import System.Collections.Generic
+import System.Text
+
+
+namespace DataObjects
+
+	public partial class Order_line_Data
+	
+		public property PartDescription, string
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+
+	endclass
+
+endnamespace

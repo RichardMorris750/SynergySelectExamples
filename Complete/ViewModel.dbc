@@ -1,0 +1,195 @@
+;;**********************************************************************
+;;
+;; Title:       ViewModel.dbc
+;;
+;; Type:        Class
+;;
+;; Description: data to UI connector
+;;
+;; Author:      Richard C. Morris, Synergex Professional Services Group
+;;
+;; Copyright (c) 2016, Synergex International, Inc. All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+import System
+import System.Collections.Generic
+import System.Text
+
+import Symphony.Conductor.ViewModel
+import System.Windows
+import System.Collections.ObjectModel
+import DataObjects
+
+;;need to import the required namespace
+import Synergex.SynergyDE.Select
+import Symphony.Conductor.Commands
+
+namespace Complete
+	
+	public class ViewModel extends BaseViewModel
+		
+		public method ViewModel
+			in req sender		,@FrameworkElement
+			endparams
+			parent(sender)
+		proc
+			;;ensure we have sample data based installed
+			CommonLogic.General.CheckDataInstall()
+			
+			OrderView = new ObservableCollection<OrderBook>()
+			
+			data supplier		,STRSupplier
+			data orderHeader	,STROrder_header
+			data orderItem		,STROrder_line
+			data partItem		,STRPart
+			data groupItem		,STRGroup
+			
+			data resultset	,@rows
+			
+			data isChanged,	boolean
+			
+			;;load only suppliers with outstading orders
+			
+			data orderBookItem		,@OrderBook
+			data orderItemDetails	,@OrderDetails
+			
+			CommonLogic.General.StartLogging()
+			
+			foreach resultset in new select(
+				&	new from("symphonydata:suppliers.ism", supplier)
+				&	.InnerJoin(new From("symphonydata:orders.ism", orderheader), (On)(orderheader.str_supplierid == supplier.str_supplier_id))
+				&	.innerJoin(new From("symphonydata:lines.ism", orderItem), (On)(orderItem.str_order_number == orderHeader.str_order_number))
+				&	.LeftJoin(new From("symphonydata:parts.ism", partItem), (On)(partItem.str_id == orderItem.str_part_id)),
+				&	NoCaseWhere.Contains(supplier.str_name, "b"),
+				&	OrderBy.AscendingKey(0)).join()
+			begin
+				;;move the data from the joinselect to our model data
+				
+				;;have we got a new supplier record?
+				resultset.RowInfo(supplier, , , isChanged)
+				if (isChanged)
+				begin
+					data obi	,@OrderBook
+					resultset.fill(supplier)
+					obi = new OrderBook(supplier)
+					orderBookItem = obi
+					OrderView.Add(orderBookItem)
+				end
+				
+				;;do we have a new order header
+				resultset.RowInfo(orderHeader, , , isChanged)
+				if (isChanged)
+				begin
+					;;get the order item
+					resultset.fill(orderHeader)
+					data ods = new OrderDetails(orderHeader)
+					orderItemDetails = ods
+					orderBookItem.Orders.Add(orderItemDetails)
+				end
+				
+				;;add the order line items
+				resultset.fill(orderItem)
+				resultset.fill(partItem)
+				data oli = new Order_line_Data(orderItem)
+				oli.PartDescription = partItem.str_description
+				orderItemDetails.OrderLines.Add(oli)
+			end
+			
+			LogInfo = CommonLogic.General.FinishLogging()
+			
+		endmethod
+		
+		public property OrderView, @ObservableCollection<OrderBook>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		public property LogInfo, @List<string>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+	endclass
+	
+	public class OrderBook
+		
+		public method OrderBook
+			in req suppiler		,STRSupplier
+			endparams
+		proc
+			SupplierDetails = new Supplier_Data(suppiler)
+			Orders = new ObservableCollection<OrderDetails>()
+		endmethod
+		
+		public property SupplierDetails, @Supplier_Data
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		public property Orders, @ObservableCollection<OrderDetails>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+	endclass
+	
+	public class OrderDetails
+		
+		public method OrderDetails
+			in header				,STROrder_header
+			endparams
+		proc
+			OrderHeader = new Order_header_Data(header)
+			OrderLines = new ObservableCollection<Order_line_Data>()
+		endmethod
+		
+		public property OrderHeader, @Order_header_Data
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		
+		public property OrderLines, @ObservableCollection<Order_line_Data>
+			method get
+			endmethod
+			method set
+			endmethod
+		endproperty
+		
+		
+		
+	endclass
+	
+endnamespace
