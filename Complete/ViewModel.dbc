@@ -83,7 +83,7 @@ namespace Complete
 				&	.innerJoin(new From("symphonydata:lines.ism", orderItem), (On)(orderItem.str_order_number == orderHeader.str_order_number))
 				&	.LeftJoin(new From("symphonydata:parts.ism", partItem), (On)(partItem.str_id == orderItem.str_part_id)),
 				&	NoCaseWhere.Contains(supplier.str_name, "b"),
-				&	OrderBy.AscendingKey(0)).join()
+				&	OrderBy.DescendingKey(0)).join()
 			begin
 				;;move the data from the joinselect to our model data
 				

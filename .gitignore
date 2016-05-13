@@ -246,3 +246,4 @@ ModelManifest.xml
 *.in
 *.dbp
 *.resources
+/LeftJoin/DBP00000
