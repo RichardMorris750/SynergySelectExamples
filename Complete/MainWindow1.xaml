@@ -1,31 +1,49 @@
 ﻿<Window x:Class="Complete.MainWindow1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Complete" Height="600" Width="900">
+    Title="Complete" Height="600" Width="1400" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="22">
     <Grid>
-        <TabControl>
+        <TabControl Padding="5">
             <TabItem Header="Orders by Supplier">
-                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=OrderView}" IsReadOnly="True">
+                <DataGrid Padding="5" AutoGenerateColumns="False" ItemsSource="{Binding Path=OrderView}" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Supplier code" Binding="{Binding Path=SupplierDetails.Supplier_id}" Width="80"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Path=SupplierDetails.Name}" Width="100"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=SupplierDetails.Name}" Width="200"></DataGridTextColumn>
                         <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Orders}">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=OrderHeader.Order_number}" Width="80"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Reference" Binding="{Binding Path=OrderHeader.Cust_ref}" Width="100"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Date" Binding="{Binding Path=OrderHeader.Del_date, StringFormat=d}" Width="60"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Order #" Binding="{Binding Path=OrderHeader.Order_number}" Width="80">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Reference" Binding="{Binding Path=OrderHeader.Cust_ref}" Width="150"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Date" Binding="{Binding Path=OrderHeader.Del_date, StringFormat=d}" Width="100"></DataGridTextColumn>
                                             <DataGridTemplateColumn Width="*">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=OrderLines}">
                                                             <DataGrid.Columns>
-                                                                <DataGridTextColumn Header="Item #" Binding="{Binding Path=Line_item}" Width="40"></DataGridTextColumn>
-                                                                <DataGridTextColumn Header="Product" Binding="{Binding Path=Part_id}" Width="100"></DataGridTextColumn>
+                                                                <DataGridTextColumn Header="Item #" Binding="{Binding Path=Line_item}" Width="80">
+                                                                    <DataGridTextColumn.ElementStyle>
+                                                                        <Style TargetType="{x:Type TextBlock}">
+                                                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                                                        </Style>
+                                                                    </DataGridTextColumn.ElementStyle>
+                                                                </DataGridTextColumn>
+                                                                <DataGridTextColumn Header="Product" Binding="{Binding Path=Part_id}" Width="150"></DataGridTextColumn>
                                                                 <DataGridTextColumn Header="Description" Binding="{Binding Path=PartDescription}" Width="*"></DataGridTextColumn>
-                                                                <DataGridTextColumn Header="Qty." Binding="{Binding Path=Quantity}" Width="40"></DataGridTextColumn>
+                                                                <DataGridTextColumn Header="Qty." Binding="{Binding Path=Quantity}" Width="80">
+                                                                    <DataGridTextColumn.ElementStyle>
+                                                                        <Style TargetType="{x:Type TextBlock}">
+                                                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                                                        </Style>
+                                                                    </DataGridTextColumn.ElementStyle>
+                                                                </DataGridTextColumn>
                                                             </DataGrid.Columns>
                                                         </DataGrid>
                                                     </DataTemplate>
@@ -39,7 +57,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Logging">
+            <TabItem Padding="5" Header="Logging">
                 <ListBox ItemsSource="{Binding Path=LogInfo}">
                     
                 </ListBox>

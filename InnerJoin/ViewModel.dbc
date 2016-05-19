@@ -101,7 +101,7 @@ namespace InnerJoin
 		endmethod
 		
 		;;; <summary>
-		;;; Collection that raises "CollecitonChanged" events when items in it are added.
+		;;; Collection that raises "CollectionChanged" events when items in it are added.
 		;;; </summary>
 		public property SupplierList, @ObservableCollection<Supplier_Data>
 			method get
