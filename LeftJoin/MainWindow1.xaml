@@ -6,7 +6,8 @@
         <DataGrid ItemsSource="{Binding Path=PartList}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="150"></DataGridTextColumn>
-                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Group ID" Binding="{Binding Path=Groupid}" Width="150"></DataGridTextColumn>
+                <DataGridTextColumn Header="Group Description" Binding="{Binding Path=GroupDescription}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="100">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
