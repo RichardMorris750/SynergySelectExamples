@@ -44,7 +44,6 @@ namespace CommonLogic
 		static method General
 			endparams
 		proc
-
 			;;ensure we anchor things to the UI
 			Symphony.Conductor.Static.ThreadSafe.AnchorToUIThread()
 		endmethod
@@ -57,8 +56,8 @@ namespace CommonLogic
 			getlog("SYMPHONYDATA", logValue, logLength)
 			if (!logLength)
 			begin
-				System.Windows.Forms.MessageBox.Show("Please install the Symphony Framework Sample Database (www.symphonyframework.net)")
-				stop;;!
+				System.Windows.MessageBox.Show("Please install the Symphony Framework Sample Database (www.symphonyframework.net)")
+				stop
 			end
 		endmethod
 
